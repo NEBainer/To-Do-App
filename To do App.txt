@@ -1,0 +1,12 @@
+fastapi_todo/
+│
+├── app/
+│   ├── main.py              # Punto de entrada de la API
+│   ├── database.py          # Configuración de la DB
+│   ├── models.py            # Modelos de SQLAlchemy
+│   ├── schemas.py           # Modelos de Pydantic
+│   └── crud.py              # Funciones para interactuar con la DB
+│
+├── requirements.txt         # Dependencias
+├── README.md                # Documentación del proyecto
+└── .gitignore
