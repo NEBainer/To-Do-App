@@ -15,3 +15,12 @@ class UsuarioMostrar(UsuarioBase):
 
     class Config:
         orm_mode = True  # Necesario para que funcione con modelos ORM (SQLAlchemy)
+
+#Esquema para actualizar un usuario (opcional)
+class UsuarioActualizar(BaseModel):
+    nombre: str | None = None
+    email: str | None = None
+    contraseña: str | None = None
+
+    class Config:
+        orm_mode = True  # Necesario para que funcione con modelos ORM (SQLAlchemy)

@@ -26,3 +26,17 @@ def obtener_usuario(usuario_id: int, db: Session = Depends(get_db)):
 @router.post("/", response_model=schemas.UsuarioMostrar)
 def crear_usuario(usuario: schemas.UsuarioCrear, db: Session = Depends(get_db)):
     return crud.crear_usuario(db=db, usuario=usuario)
+
+@router.put("/{usuario_id}", response_model=schemas.UsuarioMostrar)
+def actualizar_usuario(usuario_id: int, usuario_actualizado: schemas.UsuarioActualizar, db: Session = Depends(get_db)):
+    db_usuario = crud.actualizar_usuario(db, usuario_id, usuario_actualizado)
+    if db_usuario is None:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return db_usuario
+
+@router.delete("/{usuario_id}", response_model=schemas.UsuarioMostrar)
+def eliminar_usuario(usuario_id: int, db: Session = Depends(get_db)):
+    db_usuario = crud.eliminar_usuario(db, usuario_id)
+    if db_usuario is None:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return db_usuario

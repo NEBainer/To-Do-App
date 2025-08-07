@@ -3,6 +3,9 @@
 from sqlalchemy.orm import Session
 from app.models import Usuario
 from app.schemas import UsuarioCrear
+from app.schemas import UsuarioActualizar
+
+#Estoy repitiendo codigo para filtrar al usuario por id como validacion
 
 # Crear usuario
 def crear_usuario(db: Session, usuario: UsuarioCrear):
@@ -23,3 +26,22 @@ def obtener_usuarios(db: Session, skip: int = 0, limit: int = 10):
 # Obtener un usuario por ID
 def obtener_usuario_por_id(db: Session, usuario_id: int):
     return db.query(Usuario).filter(Usuario.id == usuario_id).first()
+
+# Actualizar usuario
+def actualizar_usuario(db: Session, usuario_id: int, usuario_actualizado: UsuarioActualizar):
+    db_usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
+    if db_usuario is None:
+        return None
+    for key, value in usuario_actualizado.dict(exclude_unset=True).items():
+        setattr(db_usuario, key, value)
+    db.commit()
+    db.refresh(db_usuario)
+    return db_usuario
+
+def eliminar_usuario(db: Session, usuario_id: int):
+    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
+    if usuario is None:
+        return None
+    db.delete(usuario)
+    db.commit()
+    return usuario
