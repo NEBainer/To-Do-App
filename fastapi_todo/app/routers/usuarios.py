@@ -1,10 +1,10 @@
 # routers/usuarios.py
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
-
-from app import crud, models, schemas
+from app import crud, schemas
 from app.database import get_db
+from app.utils import obtener_o_404
 
 router = APIRouter(
     prefix="/usuarios",
@@ -18,10 +18,10 @@ def obtener_usuarios(skip: int = 0, limit: int = 10, db: Session = Depends(get_d
 
 @router.get("/{usuario_id}", response_model=schemas.UsuarioMostrar)
 def obtener_usuario(usuario_id: int, db: Session = Depends(get_db)):
-    db_usuario = crud.obtener_usuario_por_id(db, usuario_id=usuario_id)
-    if db_usuario is None:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    return db_usuario
+    return obtener_o_404(
+        crud.obtener_usuario_por_id(db, usuario_id),
+        "Usuario"
+    )
 
 @router.post("/", response_model=schemas.UsuarioMostrar)
 def crear_usuario(usuario: schemas.UsuarioCrear, db: Session = Depends(get_db)):
@@ -29,14 +29,14 @@ def crear_usuario(usuario: schemas.UsuarioCrear, db: Session = Depends(get_db)):
 
 @router.put("/{usuario_id}", response_model=schemas.UsuarioMostrar)
 def actualizar_usuario(usuario_id: int, usuario_actualizado: schemas.UsuarioActualizar, db: Session = Depends(get_db)):
-    db_usuario = crud.actualizar_usuario(db, usuario_id, usuario_actualizado)
-    if db_usuario is None:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    return db_usuario
+    return obtener_o_404(
+        crud.actualizar_usuario(db, usuario_id, usuario_actualizado),
+        "Usuario"
+    )
 
 @router.delete("/{usuario_id}", response_model=schemas.UsuarioMostrar)
 def eliminar_usuario(usuario_id: int, db: Session = Depends(get_db)):
-    db_usuario = crud.eliminar_usuario(db, usuario_id)
-    if db_usuario is None:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    return db_usuario
+    return obtener_o_404(
+        crud.eliminar_usuario(db, usuario_id),
+        "Usuario"
+    )

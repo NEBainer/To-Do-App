@@ -1,5 +1,8 @@
 from pydantic import BaseModel
+from datetime import datetime
 
+
+# ===== USUARIOS =====
 # Esquema para mostrar un usuario
 class UsuarioBase(BaseModel):
     nombre: str
@@ -22,5 +25,24 @@ class UsuarioActualizar(BaseModel):
     email: str | None = None
     contraseña: str | None = None
 
+# ===== TAREAS =====
+class TareaBase(BaseModel):
+    titulo: str
+    descripcion: str | None
+    completada: bool = False
+
+class TareaCrear(TareaBase):
+    pass
+
+class TareaActualizar(BaseModel):
+    titulo: str | None
+    descripcion: str | None
+    completada: bool | None
+
+class TareaMostrar(TareaBase):
+    id: int
+    fecha_creacion: datetime
+    usuario_id: int
+
     class Config:
-        orm_mode = True  # Necesario para que funcione con modelos ORM (SQLAlchemy)
+        orm_mode = True
