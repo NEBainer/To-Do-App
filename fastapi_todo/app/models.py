@@ -18,7 +18,7 @@ class Tarea(Base):
     titulo = Column(String, index = True)
     descripcion = Column(String, nullable= True)
     completada = Column(Boolean, default= False)
-    fecha_creacion = Column(DateTime, default = datetime.timezone.utc)
+    fecha_creacion = Column(DateTime, default = datetime.astimezone(datetime.now()))
     usuario_id = Column(Integer, ForeignKey("usuarios.id")) #Relacion con la tabla de usuarios
 
     usuario = relationship("Usuario", back_populates="tareas") 
