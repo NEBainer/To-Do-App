@@ -1,8 +1,8 @@
 # crud.py
-
 from sqlalchemy.orm import Session
 from app.models import Usuario, Tarea
 from app.schemas import UsuarioCrear, UsuarioActualizar, TareaCrear, TareaActualizar
+from app.auth import hash_password
 
 # FUNCIONES CRUD PARA USUARIOS
 # Crear usuario
@@ -10,7 +10,7 @@ def crear_usuario(db: Session, usuario: UsuarioCrear):
     nuevo_usuario = Usuario(
         nombre=usuario.nombre,
         email=usuario.email,
-        contraseña=usuario.contraseña
+        contraseña=hash_password(usuario.contraseña)
     )
     db.add(nuevo_usuario)
     db.commit()
@@ -24,6 +24,10 @@ def obtener_usuarios(db: Session, skip: int = 0, limit: int = 10):
 # Obtener un usuario por ID
 def obtener_usuario_por_id(db: Session, usuario_id: int):
     return db.query(Usuario).filter(Usuario.id == usuario_id).first()
+
+# Obtener usuario por email
+def obtener_usuario_por_email(db: Session, email: str):
+    return db.query(Usuario).filter(Usuario.email == email).first()
 
 # Actualizar usuario
 def actualizar_usuario(db: Session, usuario_id: int, usuario_actualizado: UsuarioActualizar):

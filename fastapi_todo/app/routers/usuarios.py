@@ -5,11 +5,16 @@ from typing import List
 from app import crud, schemas
 from app.database import get_db
 from app.utils import obtener_o_404
+from app.auth import get_current_user
 
 router = APIRouter(
     prefix="/usuarios",
     tags=["usuarios"],
 )
+
+@router.get("/me", response_model=schemas.UsuarioMostrar)
+def leer_usuario_actual(usuario: models.Usuario = Depends(get_current_user)):
+    return usuario
 
 @router.get("/", response_model=List[schemas.UsuarioMostrar])
 def obtener_usuarios(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
