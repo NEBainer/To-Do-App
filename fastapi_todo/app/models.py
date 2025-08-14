@@ -10,7 +10,8 @@ class Usuario(Base):
     nombre = Column(String, index=True)  # Nombre del usuario
     email = Column(String, unique=True, index=True)  # Email único por usuario
     contraseña = Column(String)  # Contraseña (¡luego veremos cómo hashearla!)
-
+    tareas = relationship("Tarea", back_populates="usuario")
+    
 class Tarea(Base):
     __tablename__ = "tareas" 
 

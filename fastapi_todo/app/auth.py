@@ -7,7 +7,7 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from app import crud, schemas
 from app.database import get_db
-from app.auth import verify_password, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
+from sqlalchemy.orm import Session
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 

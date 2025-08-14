@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
-from app import crud, schemas
+from app import crud, schemas, models
 from app.database import get_db
 from app.utils import obtener_o_404
 from app.auth import get_current_user
@@ -27,8 +27,8 @@ def obtener_tarea(tarea_id: int, db: Session = Depends(get_db)):
     )
 
 @router.post("/", response_model= schemas.TareaMostrar)
-def crear_tarea(tarea: schemas.TareaCrear, db: Session = Depends(get_db)):
-    return crud.crear_tarea(db = db, tarea = tarea)
+def crear_tarea(tarea: schemas.TareaCrear, db: Session = Depends(get_db), usuario: models.Usuario = Depends(get_current_user)):
+    return crud.crear_tarea(db = db, tarea = tarea, usuario_id = usuario.id)
 
 @router.put("/{tarea_id}", response_model= schemas.TareaMostrar)
 def actualizar_tarea(tarea_id: int, tarea_actualizada: schemas.TareaActualizar, db: Session = Depends(get_db)):

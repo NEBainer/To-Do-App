@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
-from app import crud, schemas
+from app import crud, schemas, models
 from app.database import get_db
 from app.utils import obtener_o_404
 from app.auth import get_current_user
