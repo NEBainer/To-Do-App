@@ -51,7 +51,7 @@ Incluye **autenticación con JWT**, manejo de dependencias y documentación auto
    SECRET_KEY=tu_clave_secreta
    ALGORITHM=HS256
    ACCESS_TOKEN_EXPIRE_MINUTES=30
-``` 
+  ``` 
 ---
 ## 3)▶️ Ejecución
 - En bash:
@@ -98,17 +98,17 @@ Authorization: Bearer <token>
 ## 6) 📸 Ejemplos en Postman
 - Creación de usuario
   
-![Creación de usuario](app/imagenes/creacion_usuario.png)
+![Creación de usuario](imagenes/creacion_usuario.png)
 - Login y obtención del token
   
-![Login](app/imagenes/login.png)
+![Login](imagenes/login.png)
 - Creación de tarea autenticado
   
-![Autenticacion](app/imagenes/autenticacion.png)
-![Creación de tarea](app/imagenes/crear_tarea.png)
+![Autenticacion](imagenes/autenticacion.png)
+![Creación de tarea](imagenes/crear_tarea.png)
 - Listar tareas
   
-![Listar tareas](app/imagenes/listar_tareas.png)
+![Listar tareas](imagenes/listar_tareas.png)
 ---
 ## 7) 🛠 Tecnologías utilizadas
 - FastAPI
